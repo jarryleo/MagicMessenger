@@ -11,6 +11,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.util.Log;
 
 /**
  * @author : Jarry Leo
@@ -37,6 +38,7 @@ class BinderNode {
     private static void connect() {
         Intent intent = new Intent(mContext, BinderPool.class);
         mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        Log.d("连接服务", "connect: ");
     }
 
     /**
@@ -92,13 +94,14 @@ class BinderNode {
         public void onServiceConnected(ComponentName name, IBinder service) {
             mServer = new Messenger(service);
             reg();
-
+            Log.d("连接服务成功", "connect: ");
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
             mServer = null;
             connect();
+            Log.d("连接服务失败", "connect: ");
         }
     }
 }

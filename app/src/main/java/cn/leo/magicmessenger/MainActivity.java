@@ -33,17 +33,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e("111111111", "onMsgCallBack: " + text);
             }
         });
+        Intent intent = new Intent(this, TestService.class);
+        startService(intent);
     }
 
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(this, Main2Activity.class);
         startActivity(intent);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("test", "第一个页面发送消息到服务");
+        MagicMessenger.post("service", bundle);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         MagicMessenger.unsubscribe("activity1");
+        Intent intent = new Intent(this, TestService.class);
+        stopService(intent);
     }
 }

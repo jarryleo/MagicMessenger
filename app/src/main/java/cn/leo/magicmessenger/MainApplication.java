@@ -1,6 +1,7 @@
 package cn.leo.magicmessenger;
 
 import android.app.Application;
+import android.util.Log;
 
 import cn.leo.messenger.MagicMessenger;
 
@@ -13,5 +14,6 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
         MagicMessenger.init(this);
+        Log.e("MainApplication", "onCreate: ");
     }
 }

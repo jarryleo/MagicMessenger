@@ -29,6 +29,10 @@
             android:process=":test2"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
+        <service
+            android:name=".TestService"
+            android:process=":testServer"/>
     </application>
 
 </manifest>

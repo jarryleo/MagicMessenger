@@ -10,6 +10,7 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -19,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class BinderPool extends Service {
     private static HandlerThread mHandlerThread = new HandlerThread("BinderPoolThread");
-    private static ConcurrentHashMap<Integer, Message> mMessageMap = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<Integer, Messenger> mMessageMap = new ConcurrentHashMap<>();
     private static Messenger messenger;
     private static Handler handler;
 
@@ -32,7 +33,7 @@ public class BinderPool extends Service {
                 int key = msg.arg1;
                 switch (what) {
                     case Constant.SUBSCRIBE:
-                        mMessageMap.put(key, msg);
+                        mMessageMap.put(key, msg.replyTo);
                         break;
                     case Constant.SEND_MSG_TO_TARGET:
                         //要发送的消息
@@ -53,17 +54,21 @@ public class BinderPool extends Service {
     private static void sendMsg(Message msg) {
         try {
             Message msgToClient = Message.obtain(msg);
-            for (Message message : mMessageMap.values()) {
+            for (Messenger messenger : mMessageMap.values()) {
                 //发送消息
-                if (message.replyTo != null) {
+                if (messenger != null) {
                     Message m = new Message();
                     m.copyFrom(msgToClient);
-                    message.replyTo.send(m);
+                    messenger.send(m);
+                    Log.e("send", "sendMsg: ");
                 } else {
-                    mMessageMap.values().remove(message);
+                    mMessageMap.values().remove(messenger);
+                    Log.e("remove binder", "sendMsg: ");
                 }
             }
-            ProcessMsgCenter.onMsgReceive(msgToClient.getData());
+            Message m = new Message();
+            m.copyFrom(msgToClient);
+            ProcessMsgCenter.onMsgReceive(m.getData());
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -78,12 +83,13 @@ public class BinderPool extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        String key = intent.getStringExtra(Constant.KEY_STRING);
         Bundle extras = intent.getExtras();
-        Message message = Message.obtain(handler, Constant.SEND_MSG_TO_TARGET);
-        message.replyTo = messenger;
-        message.setData(extras);
-        sendMsg(message);
+        if (extras != null) {
+            Message message = Message.obtain(handler, Constant.SEND_MSG_TO_TARGET);
+            message.replyTo = messenger;
+            message.setData(extras);
+            sendMsg(message);
+        }
         return START_STICKY;
     }
 
