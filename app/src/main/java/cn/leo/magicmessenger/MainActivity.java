@@ -28,9 +28,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onMsgCallBack(Bundle data) {
                 String test = data.getString("test");
-                String text = "11111111" + test;
+                String text = "activity1 接收到消息" + test;
                 Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
-                Log.e("111111111", "onMsgCallBack: " + text);
+                Log.e("activity1 ", "onMsgCallBack: " + text);
             }
         });
         Intent intent = new Intent(this, TestService.class);
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
 
         Bundle bundle = new Bundle();
-        bundle.putString("test", "第一个页面发送消息到服务");
+        bundle.putString("test", "activity1 发送消息到服务");
         MagicMessenger.post("service", bundle);
     }
 

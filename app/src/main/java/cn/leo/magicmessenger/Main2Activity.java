@@ -28,7 +28,7 @@ public class Main2Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("test", "测试跨进程第二个页面");
+                bundle.putString("test", "activity2 发送的消息");
                 MagicMessenger.post("activity1", bundle);
             }
         });
@@ -46,9 +46,9 @@ public class Main2Activity extends AppCompatActivity {
             @Override
             public void onMsgCallBack(Bundle data) {
                 String test = data.getString("test");
-                String text = "222222222" + test;
+                String text = "activity2 接收到消息:" + test;
                 Toast.makeText(Main2Activity.this, text, Toast.LENGTH_SHORT).show();
-                Log.e("22222222", "onMsgCallBack: " + text);
+                Log.e("activity2", "onMsgCallBack: " + text);
             }
         });
     }

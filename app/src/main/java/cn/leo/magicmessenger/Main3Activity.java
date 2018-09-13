@@ -23,7 +23,7 @@ public class Main3Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("test", "测试跨进程第三个页面");
+                bundle.putString("test", "activity3 发送的消息");
                 MagicMessenger.post("activity2", bundle);
             }
         });

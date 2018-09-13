@@ -32,13 +32,13 @@ public class TestService extends Service {
                 Toast.makeText(TestService.this, test, Toast.LENGTH_SHORT).show();
             }
         });
-        Log.e("service", "onCreate: " );
+        Log.e("service", "onCreate: ");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         MagicMessenger.unsubscribe("service");
-        Log.e("service", "onDestroy: " );
+        Log.e("service", "onDestroy: ");
     }
 }

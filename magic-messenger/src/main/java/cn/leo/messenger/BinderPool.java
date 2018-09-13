@@ -60,10 +60,8 @@ public class BinderPool extends Service {
                     Message m = new Message();
                     m.copyFrom(msgToClient);
                     messenger.send(m);
-                    Log.e("send", "sendMsg: ");
                 } else {
                     mMessageMap.values().remove(messenger);
-                    Log.e("remove binder", "sendMsg: ");
                 }
             }
             Message m = new Message();
