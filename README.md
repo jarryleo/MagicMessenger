@@ -36,3 +36,20 @@ MagicMessenger.unsubscribe("key");
 
 ### 依赖方法:
 
+1.在全局build里添加仓库:
+```
+allprojects {
+            repositories {
+	            ......
+	            maven { url 'https://jitpack.io' }
+	}
+}
+```
+
+2.在app的build里添加依赖:
+```
+dependencies {
+            ......
+            implementation 'com.github.jarryleo:MagicMessenger:v1.0'
+}
+```
