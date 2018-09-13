@@ -29,7 +29,7 @@ MagicMessenger.subscribe("key", new MessageCallback() {
 ```
 	Bundle bundle = new Bundle();
         bundle.putString("test", "activity1 发送消息到服务");
-        MagicMessenger.post("service", bundle);
+        MagicMessenger.post("key", bundle); //第一个参数为消息订阅标志,需要唯一
 ```
 第三步:
 
