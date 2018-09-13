@@ -25,6 +25,12 @@ MagicMessenger.subscribe("key", new MessageCallback() {
             }
         });
 ```
+发送消息示例:
+```
+	Bundle bundle = new Bundle();
+        bundle.putString("test", "activity1 发送消息到服务");
+        MagicMessenger.post("service", bundle);
+```
 第三步:
 
 在对象销毁时,取消订阅,否则会导致内存泄漏
