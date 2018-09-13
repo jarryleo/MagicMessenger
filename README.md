@@ -15,8 +15,8 @@ MagicMessenger.init(this);
 
 第二步:
 
-在需要接受消息的对象中,订阅消息,第一个参数,是接收消息的标志,需要唯一;否则可能会收不到消息        
-消息依赖bundle传递,可传递类型剑bundle API
+在需要接受消息的对象中,订阅消息,第一个参数,是接收消息的标志,需要唯一;否则可能会收不到消息!                
+消息依赖bundle传递,可传递类型跟bundle 允许类型一致
 ```
 MagicMessenger.subscribe("key", new MessageCallback() {
             @Override
