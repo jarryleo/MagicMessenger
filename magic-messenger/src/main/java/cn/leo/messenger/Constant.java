@@ -1,10 +1,10 @@
-package cn.leo.magic_messenger;
+package cn.leo.messenger;
 
 /**
  * @author : Jarry Leo
  * @date : 2018/9/13 9:44
  */
-public interface Constant {
+interface Constant {
     //订阅
     int SUBSCRIBE = 1;
 
@@ -13,5 +13,8 @@ public interface Constant {
 
     //发送消息给指定目标
     int SEND_MSG_TO_TARGET = 2;
+
+    //传递key的关键字
+    String KEY_STRING = "key";
 
 }

@@ -1,10 +1,9 @@
-package cn.leo.magic_messenger;
+package cn.leo.messenger;
 
-import android.app.Activity;
 import android.app.Application;
-import android.arch.lifecycle.LifecycleOwner;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 /**
  * @author : Jarry Leo
@@ -12,7 +11,7 @@ import android.os.Bundle;
  */
 public class MagicMessenger {
 
-    private static BinderClient client;
+    private static BinderNode client;
     private static Application context;
 
     private MagicMessenger() {
@@ -27,26 +26,38 @@ public class MagicMessenger {
             Intent intent = new Intent(application, BinderPool.class);
             application.startService(intent);
         } else {
-            client = new BinderClient();
+            client = new BinderNode();
             client.bind(application);
         }
     }
 
-    public static void subscribe(Activity activity, MessageCallback callback) {
-        if (activity instanceof LifecycleOwner) {
-            LifeCycleManager lifeCycleManager = new LifeCycleManager();
-            lifeCycleManager.init((LifecycleOwner) activity);
-        }
-
-        ProcessMsgCenter.subscribe(activity, callback);
-
+    /**
+     * 订阅消息
+     *
+     * @param key      消息唯一值
+     * @param callback 消息回调
+     */
+    public static void subscribe(@NonNull String key, @NonNull MessageCallback callback) {
+        ProcessMsgCenter.subscribe(key, callback);
     }
 
-    public static void unsubscribe(Activity activity) {
-        ProcessMsgCenter.unsubscribe(activity);
+    /**
+     * 取消订阅
+     *
+     * @param key 消息唯一值
+     */
+    public static void unsubscribe(@NonNull String key) {
+        ProcessMsgCenter.unsubscribe(key);
     }
 
-    public static void post(Bundle bundle) {
+    /**
+     * 发送消息
+     *
+     * @param key    接收消息唯一值
+     * @param bundle bundle
+     */
+    public static void post(@NonNull String key, Bundle bundle) {
+        bundle.putString(Constant.KEY_STRING, key);
         if (client != null) {
             client.sendMsg(bundle);
         } else {

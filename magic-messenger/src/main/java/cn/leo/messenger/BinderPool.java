@@ -1,4 +1,4 @@
-package cn.leo.magic_messenger;
+package cn.leo.messenger;
 
 import android.app.Service;
 import android.content.Intent;
@@ -19,13 +19,12 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class BinderPool extends Service {
     private static HandlerThread mHandlerThread = new HandlerThread("BinderPoolThread");
-    private static Messenger messenger;
     private static ConcurrentHashMap<Integer, Message> mMessageMap = new ConcurrentHashMap<>();
+    private static Messenger messenger;
     private static Handler handler;
 
     static {
         mHandlerThread.start();
-        //要发送的消息
         handler = new Handler(mHandlerThread.getLooper()) {
             @Override
             public void handleMessage(Message msg) {
@@ -64,7 +63,7 @@ public class BinderPool extends Service {
                     mMessageMap.values().remove(message);
                 }
             }
-            ProcessMsgCenter.onMsgReceive(msg.getData());
+            ProcessMsgCenter.onMsgReceive(msgToClient.getData());
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -79,6 +78,7 @@ public class BinderPool extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        String key = intent.getStringExtra(Constant.KEY_STRING);
         Bundle extras = intent.getExtras();
         Message message = Message.obtain(handler, Constant.SEND_MSG_TO_TARGET);
         message.replyTo = messenger;
@@ -87,9 +87,4 @@ public class BinderPool extends Service {
         return START_STICKY;
     }
 
-    @Override
-    public boolean onUnbind(Intent intent) {
-
-        return super.onUnbind(intent);
-    }
 }

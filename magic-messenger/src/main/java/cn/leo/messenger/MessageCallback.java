@@ -1,4 +1,4 @@
-package cn.leo.magic_messenger;
+package cn.leo.messenger;
 
 import android.os.Bundle;
 

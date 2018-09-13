@@ -6,8 +6,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 
-import cn.leo.magic_messenger.MagicMessenger;
+import cn.leo.messenger.MagicMessenger;
 
 public class Main3Activity extends AppCompatActivity {
 
@@ -17,17 +18,21 @@ public class Main3Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main3);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        Button btnTest = findViewById(R.id.btnTest);
+        btnTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("test", "测试跨进程第三个页面");
+                MagicMessenger.post("activity2", bundle);
+            }
+        });
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-
-                Bundle bundle = new Bundle();
-                bundle.putString("test", "测试跨进程第三个页面");
-                MagicMessenger.post(bundle);
             }
         });
     }

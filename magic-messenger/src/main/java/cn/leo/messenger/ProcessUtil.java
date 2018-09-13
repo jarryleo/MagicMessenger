@@ -1,4 +1,4 @@
-package cn.leo.magic_messenger;
+package cn.leo.messenger;
 
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
@@ -11,7 +11,7 @@ import java.util.List;
  * @author : Jarry Leo
  * @date : 2018/9/13 14:59
  */
-public class ProcessUtil {
+class ProcessUtil {
     private ProcessUtil() {
     }
 

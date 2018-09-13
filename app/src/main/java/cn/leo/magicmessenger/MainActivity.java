@@ -8,8 +8,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import cn.leo.magic_messenger.MagicMessenger;
-import cn.leo.magic_messenger.MessageCallback;
+import cn.leo.messenger.MagicMessenger;
+import cn.leo.messenger.MessageCallback;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -24,12 +24,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTvTest = findViewById(R.id.tvTest);
         mTvTest.setOnClickListener(this);
 
-        MagicMessenger.subscribe(this, new MessageCallback() {
+        MagicMessenger.subscribe("activity1", new MessageCallback() {
             @Override
             public void onMsgCallBack(Bundle data) {
                 String test = data.getString("test");
                 String text = "11111111" + test;
-                //Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
                 Log.e("111111111", "onMsgCallBack: " + text);
             }
         });
@@ -39,16 +39,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         Intent intent = new Intent(this, Main2Activity.class);
         startActivity(intent);
-        mAction = new Runnable() {
-            @Override
-            public void run() {
-                Bundle bundle = new Bundle();
-                bundle.putString("test", "测试跨进程第一个页面");
-                MagicMessenger.post(bundle);
-               //mTvTest.postDelayed(mAction,1000);
-            }
-        };
-        mTvTest.postDelayed(mAction,5000);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MagicMessenger.unsubscribe("activity1");
+    }
 }

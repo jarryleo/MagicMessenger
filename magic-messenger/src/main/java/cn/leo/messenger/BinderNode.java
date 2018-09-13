@@ -1,5 +1,6 @@
-package cn.leo.magic_messenger;
+package cn.leo.messenger;
 
+import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -15,21 +16,21 @@ import android.os.RemoteException;
  * @author : Jarry Leo
  * @date : 2018/9/13 9:37
  */
-public class BinderClient {
+class BinderNode {
 
     private static ClientHandler handler = new ClientHandler();
     private static Messenger mMessenger = new Messenger(handler);
     private static ServiceConnection mConnection = new ClientConn();
     private static Messenger mServer;
-    private static Context mContext;
+    private static Application mContext;
 
     /**
      * 绑定通讯池
      *
      * @param context 上下文
      */
-    public void bind(Context context) {
-        mContext = context.getApplicationContext();
+    public void bind(Application context) {
+        mContext = context;
         connect();
     }
 

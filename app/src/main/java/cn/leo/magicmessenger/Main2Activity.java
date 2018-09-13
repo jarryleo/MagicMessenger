@@ -8,10 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
-import cn.leo.magic_messenger.MagicMessenger;
-import cn.leo.magic_messenger.MessageCallback;
+import cn.leo.messenger.MagicMessenger;
+import cn.leo.messenger.MessageCallback;
 
 public class Main2Activity extends AppCompatActivity {
 
@@ -22,21 +23,26 @@ public class Main2Activity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Button btnTest = findViewById(R.id.btnTest);
+        btnTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("test", "测试跨进程第二个页面");
+                MagicMessenger.post("activity1", bundle);
+            }
+        });
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-
-                Bundle bundle = new Bundle();
-                bundle.putString("test", "测试跨进程第二个页面");
-                MagicMessenger.post(bundle);
-
                 startActivity(new Intent(Main2Activity.this, Main3Activity.class));
             }
         });
-        MagicMessenger.subscribe(this, new MessageCallback() {
+        MagicMessenger.subscribe("activity2", new MessageCallback() {
             @Override
             public void onMsgCallBack(Bundle data) {
                 String test = data.getString("test");
@@ -47,4 +53,9 @@ public class Main2Activity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MagicMessenger.unsubscribe("activity2");
+    }
 }
