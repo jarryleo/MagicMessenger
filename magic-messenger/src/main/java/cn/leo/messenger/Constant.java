@@ -15,6 +15,6 @@ interface Constant {
     int SEND_MSG_TO_TARGET = 2;
 
     //传递key的关键字
-    String KEY_STRING = "key";
+    String KEY_STRING = "magic_messenger_key_flag";
 
 }
