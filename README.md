@@ -1,7 +1,7 @@
 # MagicMessenger
-## 安卓跨进程通信框架
+## 安卓跨进程跨app通信框架
 
-本框架实现了安卓跨进程通信的方便调用和封装
+本框架实现了安卓跨进程跨app通信的方便调用和封装
 
 ### 使用方法:
 
@@ -9,8 +9,10 @@
 
 在 application 里面初始化
 ```
-MagicMessenger.init(this);
+MagicMessenger.init(this); //跨进程需要
+MagicMessenger.bindOtherAPP(this, "包名"); //跨app需要
 ```
+> 跨app需要主app初始化跨进程功能,并且主app需要在次app之前启动
 #### 注意!初始化代码需要在每个进程都初始化,所以不要加进程判断代码
 
 第二步:
@@ -56,6 +58,6 @@ allprojects {
 ```
 dependencies {
             ......
-            implementation 'com.github.jarryleo:MagicMessenger:v1.3'
+            implementation 'com.github.jarryleo:MagicMessenger:v2.0'
 }
 ```
