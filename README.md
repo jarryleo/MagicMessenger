@@ -56,6 +56,6 @@ allprojects {
 ```
 dependencies {
             ......
-            implementation 'com.github.jarryleo:MagicMessenger:v1.0'
+            implementation 'com.github.jarryleo:MagicMessenger:v1.1'
 }
 ```
