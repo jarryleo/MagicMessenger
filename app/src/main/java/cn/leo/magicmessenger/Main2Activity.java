@@ -29,7 +29,7 @@ public class Main2Activity extends AppCompatActivity {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putString("test", "activity2 发送的消息");
-                MagicMessenger.post("activity1", bundle);
+                MagicMessenger.post("app2", bundle);
             }
         });
 

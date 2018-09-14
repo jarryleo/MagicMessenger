@@ -1,16 +1,19 @@
 package cn.leo.messenger;
 
+import android.annotation.TargetApi;
 import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.text.TextUtils;
 
 /**
  * @author : Jarry Leo
@@ -23,6 +26,7 @@ class BinderNode {
     private static ServiceConnection mConnection = new ClientConn();
     private static Messenger mServer;
     private static Application mContext;
+    private static String mPkgName;
 
     /**
      * 绑定通讯池
@@ -34,8 +38,27 @@ class BinderNode {
         connect();
     }
 
+    /**
+     * 跨APP通信绑定
+     *
+     * @param context 上下文
+     * @param pkgName app包名
+     */
+    public void bind(Application context, String pkgName) {
+        mContext = context;
+        mPkgName = pkgName;
+        connect();
+    }
+
+    @TargetApi(Build.VERSION_CODES.DONUT)
     private static void connect() {
-        Intent intent = new Intent(mContext, BinderPool.class);
+        Intent intent;
+        if (TextUtils.isEmpty(mPkgName)) {
+            intent = new Intent(mContext, BinderPool.class);
+        } else {
+            intent = new Intent(mPkgName + ".messenger");
+            intent.setPackage(mPkgName);
+        }
         mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
 

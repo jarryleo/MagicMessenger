@@ -1,8 +1,6 @@
-package cn.leo.magicmessenger;
+package cn.leo.magicmessenger2;
 
 import org.junit.Test;
-
-import java.util.concurrent.ConcurrentHashMap;
 
 import static org.junit.Assert.*;
 
@@ -14,10 +12,6 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
-        ConcurrentHashMap<String,String > map = new ConcurrentHashMap<>();
-        map.put("test","aaa");
-        map.put("test","bbb");
-        String s = map.get("test");
-        System.out.println(s);
+        assertEquals(4, 2 + 2);
     }
 }

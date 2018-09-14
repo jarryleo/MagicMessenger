@@ -1,1 +1,1 @@
-include ':app', ':magic-messenger'
+include ':app', ':magic-messenger', ':magicmessenger2'

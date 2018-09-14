@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 public class MagicMessenger {
 
     private static BinderNode client;
+    private static BinderNode otherAppClient;
     private static Application context;
 
     private MagicMessenger() {
@@ -29,6 +30,20 @@ public class MagicMessenger {
             client = new BinderNode();
             client.bind(application);
         }
+    }
+
+    /**
+     * 绑定跨远程app
+     *
+     * @param application application
+     * @param packageName 远程app包名
+     */
+    public static void bindOtherAPP(Application application, String packageName) {
+        if (context == null) {
+            context = application;
+        }
+        otherAppClient = new BinderNode();
+        otherAppClient.bind(application, packageName);
     }
 
     /**
@@ -53,17 +68,20 @@ public class MagicMessenger {
     /**
      * 发送消息
      *
-     * @param key    接收消息唯一值
-     * @param bundle bundle
+     * @param key  接收消息唯一值
+     * @param data data
      */
-    public static void post(@NonNull String key, Bundle bundle) {
-        bundle.putString(Constant.KEY_STRING, key);
+    public static void post(@NonNull String key, Bundle data) {
+        data.putString(Constant.KEY_STRING, key);
         if (client != null) {
-            client.sendMsg(bundle);
+            client.sendMsg(data);
         } else {
             Intent intent = new Intent(context, BinderPool.class);
-            intent.putExtras(bundle);
+            intent.putExtras(data);
             context.startService(intent);
+        }
+        if (otherAppClient != null) {
+            otherAppClient.sendMsg(data);
         }
     }
 

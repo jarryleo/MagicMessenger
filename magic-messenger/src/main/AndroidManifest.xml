@@ -2,6 +2,12 @@
           package="cn.leo.messenger">
 
     <application>
-        <service android:name="cn.leo.messenger.BinderPool"/>
+        <service
+            android:name="cn.leo.messenger.BinderPool"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="${applicationId}.messenger"/>
+            </intent-filter>
+        </service>
     </application>
 </manifest>
