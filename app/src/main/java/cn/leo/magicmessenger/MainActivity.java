@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String text = "activity1 接收到消息" + test;
                 Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
                 Log.e("activity1 ", "onMsgCallBack: " + text);
+                mTvTest.setText(test);
             }
         });
         Intent intent = new Intent(this, TestService.class);

@@ -4,13 +4,11 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -19,37 +17,35 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date : 2018/9/13 9:31
  */
 public class BinderPool extends Service {
-    private static HandlerThread mHandlerThread = new HandlerThread("BinderPoolThread");
     private static ConcurrentHashMap<Integer, Messenger> mMessageMap = new ConcurrentHashMap<>();
     private static Messenger messenger;
     private static Handler handler;
 
     static {
-        mHandlerThread.start();
-        handler = new Handler(mHandlerThread.getLooper()) {
-            @Override
-            public void handleMessage(Message msg) {
-                int what = msg.what;
-                int key = msg.arg1;
-                switch (what) {
-                    case Constant.SUBSCRIBE:
-                        mMessageMap.put(key, msg.replyTo);
-                        break;
-                    case Constant.SEND_MSG_TO_TARGET:
-                        //要发送的消息
-                        sendMsg(msg);
-                        break;
-                    case Constant.UNSUBSCRIBE:
-                        mMessageMap.remove(key);
-                        break;
-                    default:
-                }
-                System.out.println(mMessageMap);
-            }
-        };
+        handler = new ServiceHandler();
         messenger = new Messenger(handler);
     }
 
+    static class ServiceHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            int what = msg.what;
+            int key = msg.arg1;
+            switch (what) {
+                case Constant.SUBSCRIBE:
+                    mMessageMap.put(key, msg.replyTo);
+                    break;
+                case Constant.SEND_MSG_TO_TARGET:
+                    //要发送的消息
+                    sendMsg(msg);
+                    break;
+                case Constant.UNSUBSCRIBE:
+                    mMessageMap.remove(key);
+                    break;
+                default:
+            }
+        }
+    }
 
     private static void sendMsg(Message msg) {
         try {
@@ -60,8 +56,6 @@ public class BinderPool extends Service {
                     Message m = new Message();
                     m.copyFrom(msgToClient);
                     messenger.send(m);
-                } else {
-                    mMessageMap.values().remove(messenger);
                 }
             }
             Message m = new Message();
