@@ -12,7 +12,7 @@
 MagicMessenger.init(this); //跨进程需要
 MagicMessenger.bindOtherAPP(this, "包名"); //跨app需要,不跨app可以去掉
 ```
-> 跨app需要主app初始化跨进程功能
+> 跨app需要主app初始化跨进程功能，客app初始化跨app功能即可
 #### 注意!初始化代码需要在每个进程都初始化,所以不要加进程判断代码
 
 第二步:
