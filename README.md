@@ -17,7 +17,7 @@ MagicMessenger.bindOtherAPP(this, "包名"); //跨app需要,不跨app可以去�
 
 第二步:
 
-在需要接受消息的对象中,订阅消息,第一个参数,是接收消息的标志,需要唯一;否则可能会收不到消息!                
+在需要接受消息的对象中,订阅消息,第一个参数,是接收消息的标志,同一进程内需要唯一;否则可能会收不到消息! 不同进程可以同时收到消息！               
 消息依赖bundle传递,可传递类型跟bundle 允许类型一致
 ```
 MagicMessenger.subscribe("key", new MessageCallback() {
