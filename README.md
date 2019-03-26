@@ -12,12 +12,12 @@
 MagicMessenger.init(this); //跨进程需要
 MagicMessenger.bindOtherAPP(this, "包名"); //跨app需要,不跨app可以去掉
 ```
-> 跨app需要主app初始化跨进程功能
+> 跨app需要主app初始化跨进程功能，客app初始化跨app功能即可
 #### 注意!初始化代码需要在每个进程都初始化,所以不要加进程判断代码
 
 第二步:
 
-在需要接受消息的对象中,订阅消息,第一个参数,是接收消息的标志,需要唯一;否则可能会收不到消息!                
+在需要接受消息的对象中,订阅消息,第一个参数,是接收消息的标志,同一进程内需要唯一;否则可能会收不到消息! 不同进程可以同时收到消息！               
 消息依赖bundle传递,可传递类型跟bundle 允许类型一致
 ```
 MagicMessenger.subscribe("key", new MessageCallback() {
