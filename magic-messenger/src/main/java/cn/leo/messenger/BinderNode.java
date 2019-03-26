@@ -19,7 +19,7 @@ import android.text.TextUtils;
  * @author : Jarry Leo
  * @date : 2018/9/13 9:37
  */
-class BinderNode {
+public class BinderNode {
 
     private static ClientHandler handler = new ClientHandler();
     private static Messenger mMessenger = new Messenger(handler);
