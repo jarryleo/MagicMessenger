@@ -42,7 +42,7 @@ public class Main2Activity extends AppCompatActivity {
                 startActivity(new Intent(Main2Activity.this, Main3Activity.class));
             }
         });
-        MagicMessenger.subscribe("activity2", new MessageCallback() {
+        MagicMessenger.subscribe("activity1", new MessageCallback() {
             @Override
             public void onMsgCallBack(Bundle data) {
                 String test = data.getString("test");

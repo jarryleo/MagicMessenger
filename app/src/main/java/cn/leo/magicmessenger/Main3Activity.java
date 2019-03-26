@@ -24,7 +24,7 @@ public class Main3Activity extends AppCompatActivity {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putString("test", "activity3 发送的消息");
-                MagicMessenger.post("activity2", bundle);
+                MagicMessenger.post("activity1", bundle);
             }
         });
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

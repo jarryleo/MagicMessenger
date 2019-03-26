@@ -11,6 +11,9 @@ import android.widget.Toast;
 import cn.leo.messenger.MagicMessenger;
 import cn.leo.messenger.MessageCallback;
 
+/**
+ * @author Leo
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView mTvTest;

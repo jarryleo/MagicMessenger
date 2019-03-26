@@ -2,6 +2,7 @@ package cn.leo.messenger;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -9,6 +10,7 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -73,6 +75,7 @@ public class BinderPool extends Service {
         return messenger.getBinder();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent != null) {

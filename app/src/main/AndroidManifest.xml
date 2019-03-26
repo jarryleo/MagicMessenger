@@ -20,7 +20,6 @@
         <activity
             android:name=".Main2Activity"
             android:label="@string/title_activity_main2"
-            android:process=":test1"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity

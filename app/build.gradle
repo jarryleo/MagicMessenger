@@ -27,5 +27,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation project(':magic-messenger')
-//    implementation 'com.github.jarryleo:MagicMessenger:v1.3'
+//    implementation 'com.github.jarryleo:MagicMessenger:v2.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
 }

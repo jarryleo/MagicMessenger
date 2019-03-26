@@ -60,9 +60,10 @@ public class MagicMessenger {
      * 取消订阅
      *
      * @param key 消息唯一值
+     * @deprecated
      */
     public static void unsubscribe(@NonNull String key) {
-        ProcessMsgCenter.unsubscribe(key);
+        //ProcessMsgCenter.unsubscribe(key);
     }
 
     /**
